@@ -19,6 +19,8 @@ class HttpClient
     protected $_port = 80;
     //设置Cookie信息
     protected $_cookies = array();
+    //Cookie String
+    protected $_cookie_string = '';
     //设置HTTP头信息
     protected $_header = array();
     //是否显示HTTP头信息
@@ -64,9 +66,9 @@ class HttpClient
             $this->setopt(CURLOPT_HTTPHEADER, $this->_header);
         }
         //是否设置Cookie
-        if ($this->_cookies != null) {
-            $this->setopt(CURLOPT_COOKIE, $this->parse_cookie());
-        }
+        $this->parse_cookie();
+        $this->setopt(CURLOPT_COOKIE, $this->_cookie_string);
+
         $this->setopt(CURLOPT_USERAGENT, $this->user_agent);
         $this->setopt(CURLOPT_TIMEOUT, $this->_timeout);
         $this->setopt(CURLOPT_RETURNTRANSFER, 1);
@@ -137,7 +139,11 @@ class HttpClient
         foreach ($this->_cookies as $key => $val) {
             $data[] = $key . "=" . $val;
         }
-        return implode(";", $data);
+        $this->_cookie_string .=  ";" . implode(";", $data);
+    }
+
+    public function set_cookie_string($value) {
+        $this->_cookie_string = $value;
     }
 
     /**
