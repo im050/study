@@ -16,11 +16,11 @@ include('class/HttpClient.php');
 
 function print_img($url, $link,  $class = 'green')
 {
-    echo "<a href='{$link}' target='_blank'><img class='{$class}' src='{$url}' width='50' height='50' /></a> ";
+    echo "<a href='{$link}' target='_blank'><img class='{$class}' src='{$url}' width='10' height='10' /></a> ";
 }
 
 $content = '';
-$keyword = "绿茶";
+$keyword = "php";
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $size = 50;
 try {
@@ -60,6 +60,7 @@ try {
     $content = $http_client->get($path, $params);
     $result = json_decode($content);
     $pic = isset($result->data) ? $result->data : null;
+    //print_r($result);
     if (!empty($pic)) {
         foreach ($pic as $key => $p) {
             $url = $link = '';
@@ -79,6 +80,7 @@ try {
             if ($url == '' && $link == '') {
                 continue;
             }
+            //print_r();
             print_img($url, $link, $class);
         }
     }
