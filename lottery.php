@@ -1,4 +1,9 @@
 <?php
+/**
+ * 产生随机彩票数值
+ * @author: memory
+ */
+
 function get_record() {
 	$poor = range(1, 36);
 	shuffle($poor);

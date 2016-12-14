@@ -1,4 +1,9 @@
 <?php
+/**
+ * 不同格式的时间排序
+ * @author:memory
+ */
+
 $date = [
 	'November 11, 2016',
 	'31 Oct 2016',

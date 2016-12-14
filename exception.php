@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: linyulin
- * Date: 16/12/5
- * Time: 下午6:00
+ * try{}catch{}的使用测试
  */
 function foo() {
     throw new Exception("test foo");

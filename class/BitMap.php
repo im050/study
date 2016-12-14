@@ -1,4 +1,8 @@
 <?php
+
+/**
+ * Class BitMap
+ */
 class BitMap {
 	private $bitmap = 0;
 

@@ -1,4 +1,7 @@
 <?php
+/**
+ * 共享内存学习
+ */
 $systemid = ftok(__FILE__, 't'); // System ID for the shared memory segment
 $mode = "c"; // Access mode
 $permissions = 0755; // Permissions for the shared memory segment

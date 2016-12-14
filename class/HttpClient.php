@@ -21,6 +21,8 @@ class HttpClient
     protected $_cookies = array();
     //Cookie String
     protected $_cookie_string = '';
+    //Refer
+    protected $_refer = '';
     //设置HTTP头信息
     protected $_header = array();
     //是否显示HTTP头信息
@@ -37,7 +39,8 @@ class HttpClient
     public function __construct($config = array())
     {
         $this->_port = isset($config['port']) ? $config['port'] : 80;
-        $this->set_host($config['host']);
+        if (isset($config['host']))
+            $this->set_host($config['host']);
     }
 
     /**
@@ -54,7 +57,7 @@ class HttpClient
         if ($url != '') {
             $this->_url = $url;
         }
-        if ($this->_host == '')
+        if ($this->_url == '')
             throw new Exception("HttpClient: 没有指明请求的URL地址");
         $this->setopt(CURLOPT_URL, $this->_url);
         //是否返回头信息
@@ -68,12 +71,16 @@ class HttpClient
         //是否设置Cookie
         $this->parse_cookie();
         $this->setopt(CURLOPT_COOKIE, $this->_cookie_string);
-
+        $this->setopt(CURLOPT_REFERER, $this->_refer);
         $this->setopt(CURLOPT_USERAGENT, $this->user_agent);
         $this->setopt(CURLOPT_TIMEOUT, $this->_timeout);
         $this->setopt(CURLOPT_RETURNTRANSFER, 1);
         $this->setopt(CURLOPT_SSL_VERIFYPEER, false);
         $this->setopt(CURLINFO_HEADER_OUT, true);
+    }
+
+    public function set_refer($url){
+        $this->_refer = $url;
     }
 
     /**
@@ -90,6 +97,7 @@ class HttpClient
     /**
      * 获得请求内容
      * @return mixed
+     * @throws Exception
      */
     public function get_content()
     {
@@ -125,6 +133,12 @@ class HttpClient
         $this->init();
         $this->setopt(CURLOPT_POST, 1);
         $this->setopt(CURLOPT_POSTFIELDS, $data);
+        $data = $this->get_content();
+        return $data;
+    }
+
+    public function url_get($url) {
+        $this->init($url);
         $data = $this->get_content();
         return $data;
     }

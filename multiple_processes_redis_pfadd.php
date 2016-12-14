@@ -1,4 +1,8 @@
 <?php
+/**
+ * 多进程测试redis->pfadd命令
+ * 关键字: pfadd, hyperloglog
+ */
 echo "开始";
 for($i = 0; $i<10; $i++) {
 	$pid = pcntl_fork();

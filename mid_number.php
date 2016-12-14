@@ -1,4 +1,8 @@
 <?php
+/**
+ * 查找中位数
+ * @from: www.baidu.com
+ */
 error_reporting('E_ALL |~ E_ALL');
 define("MASK", 0x1f);
 $source = array(1, 74, 4, 256, 1024, 110, 111, 112, 123, 112, 100);
