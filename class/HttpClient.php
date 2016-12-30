@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class HttpClient
  * @author memory
@@ -28,7 +29,7 @@ class HttpClient
     //是否显示HTTP头信息
     protected $_response_header = false;
     //请求头信息
-    public  $header_info = '';
+    public $header_info = '';
     //用户代理
     public $user_agent = 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)';
 
@@ -65,22 +66,38 @@ class HttpClient
             $this->setopt(CURLOPT_HEADER, true);
         }
         //是否设置Http头
+
+        //是否设置Cookie
+        if ($this->parse_cookie()) {
+            $this->setopt(CURLOPT_COOKIE, $this->_cookie_string);
+        }
+        $this->setopt(CURLOPT_TIMEOUT, $this->_timeout);
+        $this->setopt(CURLOPT_RETURNTRANSFER, 1);
         if ($this->_header != null) {
             $this->setopt(CURLOPT_HTTPHEADER, $this->_header);
         }
-        //是否设置Cookie
-        $this->parse_cookie();
-        $this->setopt(CURLOPT_COOKIE, $this->_cookie_string);
-        $this->setopt(CURLOPT_REFERER, $this->_refer);
-        $this->setopt(CURLOPT_USERAGENT, $this->user_agent);
-        $this->setopt(CURLOPT_TIMEOUT, $this->_timeout);
-        $this->setopt(CURLOPT_RETURNTRANSFER, 1);
-        $this->setopt(CURLOPT_SSL_VERIFYPEER, false);
+        if (!empty($this->user_agent)) {
+            $this->setopt(CURLOPT_USERAGENT, $this->user_agent);
+        }
+        if ($this->_refer != '') {
+            $this->setopt(CURLOPT_REFERER, $this->_refer);
+        }
+        if (stripos($this->_url, "https://") !== FALSE) {
+            $this->setopt(CURLOPT_SSL_VERIFYPEER, false);
+            $this->setopt(CURLOPT_SSL_VERIFYHOST, 2);
+        }
+        $this->setopt(CURLOPT_ENCODING, "gzip");
         $this->setopt(CURLINFO_HEADER_OUT, true);
+        $this->setopt(CURLOPT_FOLLOWLOCATION, 1);
     }
 
-    public function set_refer($url){
+    public function set_refer($url)
+    {
         $this->_refer = $url;
+    }
+
+    public function get_refer() {
+        return $this->_refer;
     }
 
     /**
@@ -105,8 +122,10 @@ class HttpClient
             throw new Exception("初始化curl失败");
         }
         $data = curl_exec($this->_curl);
+        if ($data == false) {
+            throw new Exception(curl_error($this->_curl));
+        }
         $this->_status = curl_getinfo($this->_curl, CURLINFO_HTTP_CODE);
-        $this->header_info = curl_getinfo( $this->_curl, CURLINFO_HEADER_OUT);
         $this->close();
         return $data;
     }
@@ -132,12 +151,13 @@ class HttpClient
         $this->build_url($path);
         $this->init();
         $this->setopt(CURLOPT_POST, 1);
-        $this->setopt(CURLOPT_POSTFIELDS, $data);
+        $this->setopt(CURLOPT_POSTFIELDS,  http_build_query( $data ));
         $data = $this->get_content();
         return $data;
     }
 
-    public function url_get($url) {
+    public function url_get($url)
+    {
         $this->init($url);
         $data = $this->get_content();
         return $data;
@@ -145,7 +165,7 @@ class HttpClient
 
     /**
      * 将数组解析为Cookie字符串
-     * @return string
+     * @return boolean
      */
     public function parse_cookie()
     {
@@ -153,10 +173,24 @@ class HttpClient
         foreach ($this->_cookies as $key => $val) {
             $data[] = $key . "=" . $val;
         }
-        $this->_cookie_string .=  ";" . implode(";", $data);
+        $array_cookies_string = '';
+        if (!empty($data)) {
+            $array_cookies_string = implode(";", $data);
+        }
+        if (empty($this->_cookie_string)) {
+            $this->_cookie_string = $array_cookies_string;
+        } else {
+            $this->_cookie_string .= ";" . $array_cookies_string;
+        }
+        if (!empty($this->_cookie_string)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public function set_cookie_string($value) {
+    public function set_cookie_string($value)
+    {
         $this->_cookie_string = $value;
     }
 
@@ -169,7 +203,8 @@ class HttpClient
         $this->_cookies = $cookies;
     }
 
-    public function set_cookie($key, $val) {
+    public function set_cookie($key, $val)
+    {
         $this->_cookies[$key] = $val;
     }
 
@@ -200,8 +235,10 @@ class HttpClient
         switch ($this->_port) {
             case 443:
                 $this->_url = "https://" . $this->_host . $path;
+                break;
             case 80:
-                //no break;
+                $this->_url = "http://" . $this->_host . $path;
+                break;
             default:
                 $this->_url = "http://" . $this->_host . ":" . $this->_port . $path;
         }

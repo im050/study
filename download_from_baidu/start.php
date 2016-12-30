@@ -9,8 +9,8 @@ $ttl = 10;
 $worker_num = 10;
 $task_num = 10;
 
-fwrite(STDOUT,'请输入要搜索的关键字:');
-$keywords = fgets(STDIN);
+fwrite(STDOUT, '请输入要搜索的关键字:');
+$keywords = str_replace("\r\n", "", fgets(STDIN));
 
 $redis = new Redis();
 $redis->connect('127.0.0.1');
@@ -83,10 +83,15 @@ try {
                         break;
                     }
                 }
-                $http_client = new HttpClient();
-                $img = $http_client->url_get($url);
-                $file_name = md5($url) . ".jpg";
-                file_put_contents($folder_name . "/" . $file_name, $img);
+                try {
+                    $http_client = new HttpClient();
+                    $http_client->set_refer("http://www.baidu.com");
+                    $img = $http_client->url_get($url);
+                    $file_name = md5($url) . ".jpg";
+                    file_put_contents($folder_name . "/" . $file_name, $img);
+                } catch (Exception $e) {
+                    continue;
+                }
             }
             $redis->close();
             exit();
