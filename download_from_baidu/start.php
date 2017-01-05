@@ -1,6 +1,6 @@
 <?php
 include "functions.php";
-$keywords = '壁纸';
+$keywords = '卡通';
 $size = 30;
 $baidu_images = null;
 $baidu_images = new BaiduImages();
