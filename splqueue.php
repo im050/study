@@ -22,6 +22,7 @@ for($i = 0; $i <= 10; $i++) {
     $queue->enqueue($i);
 }
 
+
 while(!$queue->isEmpty()) {
     echo $queue->dequeue() . PHP_EOL;
 }
