@@ -6,6 +6,11 @@
  * Time: 下午1:28
  */
 
+gc_disable();
+
 $x = 8 - 6.4;  // which is equal to 1.6
 $y = 1.6;
 var_dump($x == $y); // is not true
+
+
+var_dump($_ENV);

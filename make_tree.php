@@ -1,4 +1,11 @@
 <?php
+/**
+ * A question from Segmentfaults.com
+ * Rebuild a array, like a tree.
+ *
+ * @author memory
+ */
+
 $array = [
      1 => [ 'k' => 0 ],
      2 => [ 'k' => 1 ],
