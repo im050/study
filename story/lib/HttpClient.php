@@ -1,5 +1,5 @@
 <?php
-
+namespace lib;
 /**
  * Class HttpClient
  * @author memory

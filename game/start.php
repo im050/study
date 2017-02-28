@@ -1,7 +1,7 @@
 <?php
 /**
- * 解锁小游戏
- * @desciption: 控制台下运行
+ * Unlock The Password
+ * @description: Run with CLI
  * @author: memory <service@im050.com>
  */
 
@@ -11,7 +11,7 @@ include('functions.php');
 $console = Console::getInstance();
 
 /**
- * 开始游戏
+ * Begin
  */
 $console->worker('begin', function ($console) {
     $random = getNonRepetitiveNumbers(4, 0, 9);
@@ -20,7 +20,7 @@ $console->worker('begin', function ($console) {
 });
 
 /**
- * 处理用户输入内容
+ * Handle user input.
  */
 $console->worker('user_input', function ($console, $data) {
     $user_input = array();
@@ -42,7 +42,7 @@ $console->worker('user_input', function ($console, $data) {
 });
 
 /**
- * 校验用户输入结果
+ * Check user input
  */
 $console->worker('valid_result', function ($console, $data) {
     $user_input = $data['user_input'];
