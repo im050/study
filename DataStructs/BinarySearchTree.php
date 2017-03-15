@@ -199,18 +199,6 @@ class BinarySearchTree
         }
     }
 
-    public function preOrderTraversal() {
-
-    }
-
-    public function inOrderTraversal() {
-
-    }
-
-    public function postOrderTraversal() {
-
-    }
-
 }
 
 $tree = new BinarySearchTree(new TNode(1));
