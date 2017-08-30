@@ -1,31 +1,47 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-	<dict>
-		<key>items</key>
-		<array>
-			<dict>
-				<key>assets</key>
-				<array>
-					<dict>
-						<key>kind</key>
-						<string>software-package</string>
-						<key>url</key>
-						<string>http://ove1c7uaw.bkt.clouddn.com/QingYun.ipa</string>
-					</dict>
-				</array>
-				<key>metadata</key>
-				<dict>
-					<key>bundle-identifier</key>
-					<string>com.wanmei.qyz.ios</string>
-					<key>bundle-version</key>
-					<string>1.0.7</string>
-					<key>kind</key>
-					<string>software</string>
-					<key>title</key>
-					<string>决战青云</string>
-				</dict>
-			</dict>
-		</array>
-	</dict>
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">  
+<plist version="1.0">  
+<dict>  
+    <key>items</key>  
+    <array>  
+        <dict>  
+            <key>assets</key>  
+            <array>  
+                <dict>  
+                    <key>kind</key>  
+                    <string>software-package</string>  
+                    <key>url</key>  
+                    <string>http://ove1c7uaw.bkt.clouddn.com/QingYun.ipa</string>
+                </dict>  
+                <dict>  
+                    <key>kind</key>  
+                    <string>full-size-image</string>  
+                    <key>needs-shine</key>  
+                    <true/>  
+                    <key>url</key>  
+                    <string>http://116.196.98.250/icon57x57@2x.png</string>  
+                </dict>  
+                <dict>  
+                    <key>kind</key>  
+                    <string>display-image</string>  
+                    <key>needs-shine</key>  
+                    <true/>  
+                    <key>url</key>  
+                    <string>http://116.196.98.250/icon57x57.png</string>  
+                </dict>  
+            </array>  
+            <key>metadata</key>  
+            <dict>  
+                <key>bundle-identifier</key>
+		<string>com.wanmei.qyz.ios</string>
+		<key>bundle-version</key>
+		<string>1.0.7</string>
+		<key>kind</key>
+		<string>software</string>
+		<key>title</key>
+		<string>决战青云</string>
+            </dict>  
+        </dict>  
+    </array>  
+</dict>  
 </plist>
